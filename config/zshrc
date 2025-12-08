@@ -1,0 +1,35 @@
+# Path to your oh-my-zsh installation.
+export ZSH=$HOME/.oh-my-zsh
+
+# Set name of the theme to load (empty for starship)
+ZSH_THEME=""
+
+# Which plugins would you like to load?
+# Standard plugins can be found in $ZSH/plugins/
+plugins=(git zsh-syntax-highlighting zsh-autosuggestions jsontools common-aliases)
+
+source $ZSH/oh-my-zsh.sh
+
+# Disable auto-update prompts
+DISABLE_AUTO_UPDATE=true
+DISABLE_UPDATE_PROMPT=true
+
+# User configuration
+export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$HOME/go/bin:/usr/local/go/bin:$PATH"
+
+# Aliases
+alias ll="ls -la"
+alias la="ls -A"
+alias l="ls -CF"
+alias fd="fdfind"
+alias vim="nvim"
+
+# History
+HISTFILE=/home/dev/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+setopt appendhistory
+setopt sharehistory
+
+# Initialize starship prompt
+eval "$(starship init zsh)"

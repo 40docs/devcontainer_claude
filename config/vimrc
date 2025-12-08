@@ -1,0 +1,71 @@
+syntax on
+filetype plugin indent on
+set nocompatible
+set number
+" Always show current position
+set ruler
+
+" Height of Command bar
+set cmdheight=1
+set foldcolumn=1
+"configure backspace to be normal
+set backspace=eol,start,indent
+set whichwrap+=<,>,h,l
+
+"Ignore case when searching
+set ignorecase
+
+"Highlight Search results
+set hlsearch
+
+"set search to act like search in browsers
+set incsearch
+
+"show matching brackets
+set showmatch
+set mat=2
+
+"no annoying sound on error
+set noerrorbells
+set novisualbell
+set t_vb=
+set tm=500
+
+"Properly disable sound on errors on MacVim
+if has("gui_macvim")
+  autocmd GUIEnter * set vb t_vb=
+endif
+
+"enable syntax highlighting
+syntax enable
+
+"set standard encoding
+set encoding=utf8
+
+"set Unit as standard file type
+set ffs=unix,dos,mac
+set t_Co=256
+set t_ut=
+
+" Configuration vim Airline
+set laststatus=2
+
+set noshowmode
+
+set autoindent expandtab tabstop=2 shiftwidth=2
+
+set hlsearch
+
+" tell vim to keep a backup file
+set backup
+
+" tell vim where to put its backup files
+set backupdir=/tmp
+
+" tell vim where to put swap files
+set dir=/tmp
+
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+    \| exe "normal! g'\"" | endif
+endif
