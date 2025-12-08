@@ -63,20 +63,24 @@ RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
 # Install starship prompt
 RUN curl -fsSL https://starship.rs/install.sh | sh -s -- -y
 
-# Install ttyd for web terminal
-RUN curl -fsSL -o /tmp/ttyd https://github.com/tsl0922/ttyd/releases/download/1.7.7/ttyd.x86_64 \
+# Install ttyd for web terminal (multi-arch)
+ARG TARGETARCH
+RUN TTYD_ARCH=$([ "$TARGETARCH" = "arm64" ] && echo "aarch64" || echo "x86_64") \
+    && curl -fsSL -o /tmp/ttyd "https://github.com/tsl0922/ttyd/releases/download/1.7.7/ttyd.${TTYD_ARCH}" \
     && chmod +x /tmp/ttyd \
     && mv /tmp/ttyd /usr/local/bin/ttyd
 
-# Install Terraform
-RUN curl -fsSL https://releases.hashicorp.com/terraform/1.9.8/terraform_1.9.8_linux_amd64.zip -o /tmp/terraform.zip \
+# Install Terraform (multi-arch)
+RUN TF_ARCH=$([ "$TARGETARCH" = "arm64" ] && echo "arm64" || echo "amd64") \
+    && curl -fsSL "https://releases.hashicorp.com/terraform/1.9.8/terraform_1.9.8_linux_${TF_ARCH}.zip" -o /tmp/terraform.zip \
     && unzip /tmp/terraform.zip -d /tmp \
     && mv /tmp/terraform /usr/local/bin/terraform \
     && chmod +x /usr/local/bin/terraform \
     && rm /tmp/terraform.zip
 
-# Install AWS CLI v2
-RUN curl -fsSL "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o /tmp/awscliv2.zip \
+# Install AWS CLI v2 (multi-arch)
+RUN AWS_ARCH=$([ "$TARGETARCH" = "arm64" ] && echo "aarch64" || echo "x86_64") \
+    && curl -fsSL "https://awscli.amazonaws.com/awscli-exe-linux-${AWS_ARCH}.zip" -o /tmp/awscliv2.zip \
     && unzip /tmp/awscliv2.zip -d /tmp \
     && /tmp/aws/install \
     && rm -rf /tmp/aws /tmp/awscliv2.zip
@@ -116,9 +120,11 @@ RUN git config --global init.defaultBranch main \
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 ENV PATH="/home/dev/.cargo/bin:${PATH}"
 
-# Install Go
+# Install Go (multi-arch)
 ENV GO_VERSION=1.23.4
-RUN curl -fsSL "https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz" -o /tmp/go.tar.gz \
+ARG TARGETARCH
+RUN GO_ARCH=$([ "$TARGETARCH" = "arm64" ] && echo "arm64" || echo "amd64") \
+    && curl -fsSL "https://go.dev/dl/go${GO_VERSION}.linux-${GO_ARCH}.tar.gz" -o /tmp/go.tar.gz \
     && sudo tar -C /usr/local -xzf /tmp/go.tar.gz \
     && rm /tmp/go.tar.gz
 ENV PATH="/usr/local/go/bin:/home/dev/go/bin:${PATH}"
