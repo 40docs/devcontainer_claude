@@ -70,6 +70,7 @@ claude
 - Terraform
 - AWS CLI v2
 - Azure CLI
+- GitHub CLI (`gh`)
 
 ### CLI Tools
 - **Search**: ripgrep (`rg`), fd-find (`fdfind`), fzf
@@ -105,9 +106,19 @@ docker rm -f claude-dev
 docker pull ghcr.io/40docs/devcontainer_claude:latest
 ```
 
-## Optional: Enable SSH with your key
+## Optional: Enable SSH access
 
-Mount your public key to enable SSH access:
+### 1. Generate an SSH key (if you don't have one)
+
+```bash
+ssh-keygen -t ed25519
+```
+
+Press Enter to accept defaults. This creates:
+- `~/.ssh/id_ed25519` - your private key (keep secret)
+- `~/.ssh/id_ed25519.pub` - your public key (safe to share)
+
+### 2. Run container with your key mounted
 
 ```bash
 docker run -d --name claude-dev \
@@ -117,7 +128,11 @@ docker run -d --name claude-dev \
   ghcr.io/40docs/devcontainer_claude:latest
 ```
 
-Then connect: `ssh -p 2222 dev@localhost`
+### 3. Connect
+
+```bash
+ssh -p 2222 dev@localhost
+```
 
 ## Optional: Mount a project directory
 
