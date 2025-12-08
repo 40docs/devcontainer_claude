@@ -122,20 +122,6 @@ RUN git config --global init.defaultBranch main \
     && git config --global core.editor "nvim" \
     && git config --global pull.rebase false
 
-# Install Rust toolchain
-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-ENV PATH="/home/dev/.cargo/bin:${PATH}"
-
-# Install Go (multi-arch)
-ENV GO_VERSION=1.23.4
-ARG TARGETARCH
-RUN GO_ARCH=$([ "$TARGETARCH" = "arm64" ] && echo "arm64" || echo "amd64") \
-    && curl -fsSL "https://go.dev/dl/go${GO_VERSION}.linux-${GO_ARCH}.tar.gz" -o /tmp/go.tar.gz \
-    && sudo tar -C /usr/local -xzf /tmp/go.tar.gz \
-    && rm /tmp/go.tar.gz
-ENV PATH="/usr/local/go/bin:/home/dev/go/bin:${PATH}"
-ENV GOPATH="/home/dev/go"
-
 # Install Claude Code globally
 RUN sudo npm install -g @anthropic-ai/claude-code
 
