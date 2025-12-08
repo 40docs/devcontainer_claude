@@ -18,7 +18,8 @@ RUN apt-get update && apt-get install -y \
     && update-locale LANG=en_US.UTF-8
 
 # Install development tools and utilities
-RUN apt-get update && apt-get install -y \
+# Note: openssh-server installed separately to avoid resolv.conf issues on ARM builds
+RUN apt-get update && apt-get install -y --no-install-recommends \
     # Build essentials
     build-essential \
     pkg-config \
@@ -28,7 +29,6 @@ RUN apt-get update && apt-get install -y \
     # Network tools
     curl \
     wget \
-    openssh-server \
     # CLI utilities
     jq \
     ripgrep \
@@ -53,6 +53,12 @@ RUN apt-get update && apt-get install -y \
     gnupg \
     # sudo
     sudo \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install openssh-server separately with workaround for QEMU builds
+RUN apt-get update \
+    && ln -fs /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf 2>/dev/null || true \
+    && apt-get install -y --no-install-recommends openssh-server \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Node.js 22 LTS via NodeSource
