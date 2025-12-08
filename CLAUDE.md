@@ -6,14 +6,17 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Docker setup for running Claude Code in a containerized Ubuntu 24.04 development environment with remote access.
 
-## Build Commands
+## Commands
 
 ```bash
-# Build the image
-docker build -t claude-code .
+# Pull from registry
+docker pull ghcr.io/40docs/devcontainer_claude:latest
 
 # Run the container
-docker run -d --name claude-dev -p 2222:22 -p 7681:7681 claude-code
+docker run -d --name claude-dev -p 2222:22 -p 7681:7681 ghcr.io/40docs/devcontainer_claude:latest
+
+# Build locally
+docker build -t devcontainer_claude .
 
 # Stop/remove
 docker rm -f claude-dev
@@ -24,7 +27,7 @@ docker rm -f claude-dev
 - **Dockerfile**: Ubuntu 24.04 image with:
   - Non-root `dev` user (UID 1000) with sudo access
   - Zsh + Oh My Zsh + Starship prompt
-  - Node.js 22, Python 3, Rust, Go
+  - Node.js 22, Python 3
   - Terraform, AWS CLI, Azure CLI
   - Claude Code installed globally via npm
   - SSH server and ttyd for remote access

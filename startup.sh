@@ -2,11 +2,16 @@
 set -e
 
 # Ensure SSH directory has correct permissions
-if [ -f /home/dev/.ssh/authorized_keys ]; then
-    sudo chown dev:dev /home/dev/.ssh/authorized_keys 2>/dev/null || true
-    chmod 600 /home/dev/.ssh/authorized_keys 2>/dev/null || true
-fi
 chmod 700 /home/dev/.ssh
+
+# Copy mounted SSH key to authorized_keys with correct permissions
+# Mount your key to /tmp/ssh_key (e.g., -v ~/.ssh/id_ed25519.pub:/tmp/ssh_key:ro)
+if [ -f /tmp/ssh_key ]; then
+    cp /tmp/ssh_key /home/dev/.ssh/authorized_keys
+    chown dev:dev /home/dev/.ssh/authorized_keys
+    chmod 600 /home/dev/.ssh/authorized_keys
+    echo "SSH key installed from /tmp/ssh_key"
+fi
 
 # Ensure history files exist and are writable
 touch /home/dev/.zsh_history /home/dev/.bash_history 2>/dev/null || true

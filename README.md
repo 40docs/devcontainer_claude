@@ -7,22 +7,29 @@ A production-ready Docker container for running Claude Code with a full developm
 - **Base**: Ubuntu 24.04 with UTF-8 locale
 - **User**: Non-root `dev` user with sudo access
 - **Shell**: Zsh with Oh My Zsh + Starship prompt
-- **Languages**: Node.js 22 LTS, Python 3, Rust, Go
+- **Languages**: Node.js 22 LTS, Python 3
 - **Cloud Tools**: Terraform, AWS CLI, Azure CLI
 - **Remote Access**: SSH (port 22) and ttyd web terminal (port 7681)
 
 ## Quick Start
 
-### Build
+### Pull from registry
 
 ```bash
-docker build -t claude-code .
+docker pull ghcr.io/40docs/devcontainer_claude:latest
 ```
 
 ### Run
 
 ```bash
-docker run -d --name claude-dev -p 2222:22 -p 7681:7681 claude-code
+docker run -d --name claude-dev -p 2222:22 -p 7681:7681 ghcr.io/40docs/devcontainer_claude:latest
+```
+
+### Build locally (optional)
+
+```bash
+docker build -t devcontainer_claude .
+docker run -d --name claude-dev -p 2222:22 -p 7681:7681 devcontainer_claude
 ```
 
 ### Connect
@@ -58,8 +65,6 @@ claude
 ### Languages & Runtimes
 - Node.js 22 LTS with npm
 - Python 3 with pip and venv
-- Rust (via rustup)
-- Go 1.23
 
 ### Cloud & Infrastructure
 - Terraform
@@ -78,20 +83,41 @@ claude
 ## Container Management
 
 ```bash
+# List images
+docker images
+
+# List running containers
+docker ps
+
+# List all containers (including stopped)
+docker ps -a
+
 # Stop
 docker stop claude-dev
 
 # Start again
 docker start claude-dev
 
-# Remove
+# Remove container
 docker rm -f claude-dev
 
-# Rebuild after Dockerfile changes
-docker build -t claude-code .
-docker rm -f claude-dev
-docker run -d --name claude-dev -p 2222:22 -p 7681:7681 claude-code
+# Pull latest version
+docker pull ghcr.io/40docs/devcontainer_claude:latest
 ```
+
+## Optional: Enable SSH with your key
+
+Mount your public key to enable SSH access:
+
+```bash
+docker run -d --name claude-dev \
+  -p 2222:22 \
+  -p 7681:7681 \
+  -v ~/.ssh/id_ed25519.pub:/tmp/ssh_key:ro \
+  ghcr.io/40docs/devcontainer_claude:latest
+```
+
+Then connect: `ssh -p 2222 dev@localhost`
 
 ## Optional: Mount a project directory
 
@@ -102,5 +128,5 @@ docker run -d --name claude-dev \
   -p 2222:22 \
   -p 7681:7681 \
   -v /path/to/your/project:/home/dev/projects \
-  claude-code
+  ghcr.io/40docs/devcontainer_claude:latest
 ```
