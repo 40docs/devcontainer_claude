@@ -75,6 +75,7 @@ claude
 ### CLI Tools
 - **Search**: ripgrep (`rg`), fd-find (`fdfind`), fzf
 - **Editors**: neovim, vim
+- **Files**: eza (modern `ls` replacement with git integration)
 - **Utils**: git, curl, wget, jq, htop, tmux, tree
 
 ### Claude Code

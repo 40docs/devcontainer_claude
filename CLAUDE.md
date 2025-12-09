@@ -29,6 +29,7 @@ docker rm -f claude-dev
   - Zsh + Oh My Zsh + Starship prompt
   - Node.js 22, Python 3
   - Terraform, AWS CLI, Azure CLI
+  - eza (modern ls replacement with git integration)
   - Claude Code installed globally via npm
   - SSH server and ttyd for remote access
 
