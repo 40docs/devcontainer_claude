@@ -18,7 +18,8 @@ DISABLE_UPDATE_PROMPT=true
 export PATH="$HOME/.local/bin:$PATH"
 
 # Aliases
-alias ll="ls -la"
+alias ls="eza --git"
+alias ll="eza -la --git"
 alias la="ls -A"
 alias l="ls -CF"
 alias fd="fdfind"
