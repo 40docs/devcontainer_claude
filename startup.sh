@@ -31,8 +31,9 @@ echo "Starting ttyd web terminal on port 7681..."
 echo "Web terminal available at: http://localhost:7681"
 echo ""
 echo "Claude Code container is ready!"
-echo "  - SSH:  ssh -p 2222 dev@localhost"
-echo "  - Web:  http://localhost:7681"
+echo "  - SSH:   ssh -p 2222 dev@localhost"
+echo "  - Web:   http://localhost:7681"
+echo "  - Flask: http://localhost:5000 (when running)"
 echo ""
 
 # Run ttyd in foreground (keeps container running)

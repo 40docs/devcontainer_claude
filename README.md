@@ -9,7 +9,7 @@ A production-ready Docker container for running Claude Code with a full developm
 - **Shell**: Zsh with Oh My Zsh + Starship prompt
 - **Languages**: Node.js 22 LTS, Python 3
 - **Cloud Tools**: Terraform, AWS CLI, Azure CLI
-- **Remote Access**: SSH (port 22) and ttyd web terminal (port 7681)
+- **Remote Access**: SSH (port 22), ttyd web terminal (port 7681), Flask (port 5000)
 
 ## Quick Start
 
@@ -22,14 +22,14 @@ docker pull ghcr.io/40docs/devcontainer_claude:latest
 ### Run
 
 ```bash
-docker run -d --name claude-dev -p 2222:22 -p 7681:7681 ghcr.io/40docs/devcontainer_claude:latest
+docker run -d --name claude-dev -p 2222:22 -p 7681:7681 -p 5000:5000 ghcr.io/40docs/devcontainer_claude:latest
 ```
 
 ### Build locally (optional)
 
 ```bash
 docker build -t devcontainer_claude .
-docker run -d --name claude-dev -p 2222:22 -p 7681:7681 devcontainer_claude
+docker run -d --name claude-dev -p 2222:22 -p 7681:7681 -p 5000:5000 devcontainer_claude
 ```
 
 ### Connect
@@ -59,6 +59,7 @@ claude
 |------|---------|-------------|
 | 2222 | SSH | Secure shell access (mapped from container port 22) |
 | 7681 | ttyd | Web-based terminal |
+| 5000 | Flask | Flask application development server |
 
 ## Installed Tools
 
@@ -125,6 +126,7 @@ Press Enter to accept defaults. This creates:
 docker run -d --name claude-dev \
   -p 2222:22 \
   -p 7681:7681 \
+  -p 5000:5000 \
   -v ~/.ssh/id_ed25519.pub:/tmp/ssh_key:ro \
   ghcr.io/40docs/devcontainer_claude:latest
 ```
@@ -143,6 +145,7 @@ If you want to work on files from your host:
 docker run -d --name claude-dev \
   -p 2222:22 \
   -p 7681:7681 \
+  -p 5000:5000 \
   -v /path/to/your/project:/home/dev/projects \
   ghcr.io/40docs/devcontainer_claude:latest
 ```

@@ -13,7 +13,7 @@ Docker setup for running Claude Code in a containerized Ubuntu 24.04 development
 docker pull ghcr.io/40docs/devcontainer_claude:latest
 
 # Run the container
-docker run -d --name claude-dev -p 2222:22 -p 7681:7681 ghcr.io/40docs/devcontainer_claude:latest
+docker run -d --name claude-dev -p 2222:22 -p 7681:7681 -p 5000:5000 ghcr.io/40docs/devcontainer_claude:latest
 
 # Build locally
 docker build -t devcontainer_claude .
@@ -42,4 +42,4 @@ docker rm -f claude-dev
 - No volume mounts required - container is self-contained
 - API keys set via `export` inside the container after connecting
 - ttyd runs in foreground as main process for container lifecycle
-- Host ports: 2222 (SSH), 7681 (web terminal)
+- Host ports: 2222 (SSH), 7681 (web terminal), 5000 (Flask)

@@ -154,7 +154,7 @@ COPY --chown=dev:dev startup.sh /home/dev/startup.sh
 RUN chmod +x /home/dev/startup.sh
 
 # Expose ports
-EXPOSE 22 7681
+EXPOSE 22 7681 5000
 
 # Set working directory
 WORKDIR /home/dev/projects
