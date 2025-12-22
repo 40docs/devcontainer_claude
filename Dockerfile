@@ -126,6 +126,9 @@ RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master
 RUN git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting \
     && git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 
+# Install TPM (Tmux Plugin Manager)
+RUN git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
 # Configure Git defaults
 RUN git config --global init.defaultBranch main \
     && git config --global core.editor "nvim" \
@@ -141,13 +144,19 @@ RUN mkdir -p /home/dev/projects
 RUN mkdir -p /home/dev/.ssh \
     && chmod 700 /home/dev/.ssh
 
-# Create starship config directory
-RUN mkdir -p /home/dev/.config
+# Create config and scripts directories
+RUN mkdir -p /home/dev/.config /home/dev/scripts
 
 # Copy config files
 COPY --chown=dev:dev config/vimrc /home/dev/.vimrc
 COPY --chown=dev:dev config/zshrc /home/dev/.zshrc
 COPY --chown=dev:dev config/starship.toml /home/dev/.config/starship.toml
+COPY --chown=dev:dev config/tmux.conf /home/dev/.tmux.conf
+
+# Copy tmux scripts
+COPY --chown=dev:dev scripts/tmux.sh /home/dev/tmux.sh
+COPY --chown=dev:dev scripts/notmux.sh /home/dev/notmux.sh
+RUN chmod +x /home/dev/tmux.sh /home/dev/notmux.sh
 
 # Copy startup script
 COPY --chown=dev:dev startup.sh /home/dev/startup.sh
