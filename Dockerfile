@@ -145,10 +145,11 @@ RUN mkdir -p /home/dev/.ssh \
     && chmod 700 /home/dev/.ssh
 
 # Create config and scripts directories
-RUN mkdir -p /home/dev/.config /home/dev/scripts
+RUN mkdir -p /home/dev/.config/nvim /home/dev/scripts
 
 # Copy config files
 COPY --chown=dev:dev config/vimrc /home/dev/.vimrc
+COPY --chown=dev:dev config/init.vim /home/dev/.config/nvim/init.vim
 COPY --chown=dev:dev config/zshrc /home/dev/.zshrc
 COPY --chown=dev:dev config/starship.toml /home/dev/.config/starship.toml
 COPY --chown=dev:dev config/tmux.conf /home/dev/.tmux.conf
