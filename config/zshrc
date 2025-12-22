@@ -23,6 +23,7 @@ alias ll="eza -la --git"
 alias la="ls -A"
 alias l="ls -CF"
 alias fd="fdfind"
+alias vi="nvim"
 alias vim="nvim"
 
 # History
