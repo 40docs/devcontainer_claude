@@ -3,6 +3,7 @@
 tmux new-session -d -s devtime -n main
 tmux send-keys "cd ~/projects/" C-m
 tmux split-window -h -t devtime
+tmux resize-pane -R 20
 tmux split-window -v -t devtime
 tmux new-window -n editor
 HIGHLIGHT_COLOR="cyan"
