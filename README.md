@@ -71,6 +71,7 @@ claude
 - Terraform
 - AWS CLI v2
 - Azure CLI
+- kubectl
 - GitHub CLI (`gh`)
 
 ### CLI Tools

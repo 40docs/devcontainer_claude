@@ -28,7 +28,7 @@ docker rm -f claude-dev
   - Non-root `dev` user (UID 1000) with sudo access
   - Zsh + Oh My Zsh + Starship prompt
   - Node.js 22, Python 3
-  - Terraform, AWS CLI, Azure CLI
+  - Terraform, AWS CLI, Azure CLI, kubectl
   - eza (modern ls replacement with git integration)
   - Claude Code installed globally via npm
   - SSH server and ttyd for remote access
