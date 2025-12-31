@@ -46,6 +46,8 @@ set encoding=utf8
 set ffs=unix,dos,mac
 set t_Co=256
 set t_ut=
+set termguicolors
+set background=dark
 
 " Configuration vim Airline
 set laststatus=2

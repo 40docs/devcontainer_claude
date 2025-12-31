@@ -121,6 +121,10 @@ RUN mkdir -p /var/run/sshd \
     && sed -i 's/#PubkeyAuthentication yes/PubkeyAuthentication yes/' /etc/ssh/sshd_config \
     && echo "AllowUsers dev" >> /etc/ssh/sshd_config
 
+# Make vi and vim point to nvim system-wide
+RUN update-alternatives --install /usr/bin/vi vi /usr/bin/nvim 60 \
+    && update-alternatives --install /usr/bin/vim vim /usr/bin/nvim 60
+
 # Switch to dev user for user-specific installations
 USER dev
 WORKDIR /home/dev
@@ -152,6 +156,10 @@ RUN mkdir -p /home/dev/.ssh \
 
 # Create config and scripts directories
 RUN mkdir -p /home/dev/.config/nvim /home/dev/scripts
+
+# Install Catppuccin colorscheme for neovim
+RUN mkdir -p /home/dev/.local/share/nvim/site/pack/plugins/start \
+    && git clone --depth 1 https://github.com/catppuccin/nvim.git /home/dev/.local/share/nvim/site/pack/plugins/start/catppuccin
 
 # Copy config files
 COPY --chown=dev:dev config/vimrc /home/dev/.vimrc
